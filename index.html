@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perla Car Rental — Alquila el Hyundai HV20</title>
+<title>Perla Rental Car — Alquila el Hyundai HV20</title>
 <meta name="description" content="Alquiler de carros en Pereira: Hyundai HV20 automático, ideal para moverte por la ciudad o recorrer el Eje Cafetero. Reserva por WhatsApp y recoge tu carro el mismo día.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://jaescobarc.github.io/perla-car-rental/">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jaescobarc.github.io/perla-car-rental/">
-<meta property="og:title" content="Perla Car Rental — Alquila el Hyundai HV20">
+<meta property="og:title" content="Perla Rental Car — Alquila el Hyundai HV20">
 <meta property="og:description" content="Alquiler de carros en Pereira: Hyundai HV20 automático, ideal para la ciudad o el Eje Cafetero. Reserva por WhatsApp.">
 <meta property="og:image" content="https://jaescobarc.github.io/perla-car-rental/og-image.jpg">
 <meta property="og:locale" content="es_CO">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Perla Car Rental — Alquila el Hyundai HV20">
+<meta name="twitter:title" content="Perla Rental Car — Alquila el Hyundai HV20">
 <meta name="twitter:description" content="Alquiler de carros en Pereira: Hyundai HV20 automático, ideal para la ciudad o el Eje Cafetero. Reserva por WhatsApp.">
 <meta name="twitter:image" content="https://jaescobarc.github.io/perla-car-rental/og-image.jpg">
 
@@ -24,7 +24,7 @@
 {
   "@context": "https://schema.org",
   "@type": "AutoRental",
-  "name": "Perla Car Rental",
+  "name": "Perla Rental Car",
   "url": "https://jaescobarc.github.io/perla-car-rental/",
   "image": "https://jaescobarc.github.io/perla-car-rental/og-image.jpg",
   "areaServed": [
@@ -242,7 +242,7 @@
   /* ---------- Hero visual: full-bleed photo carousel ---------- */
   .hero-visual{
     position:relative;
-    height:calc(100vh - var(--header-h,64px) - var(--sticky-h,0px));
+    height:calc(100vh - var(--header-h,64px));
     min-height:420px;
     overflow:hidden;
     background:var(--ink);
@@ -558,17 +558,22 @@
     flex-wrap:wrap;gap:var(--sp-3);font-size:var(--fs-100);color:rgba(255,255,255,0.4);
   }
 
-  /* ---------- Sticky mobile CTA ---------- */
-  .sticky-cta{
-    position:fixed;left:0;right:0;bottom:0;z-index:60;
-    background:var(--ink);
+  /* ---------- WhatsApp flotante (mobile) ---------- */
+  .whatsapp-fab{
+    position:fixed;right:var(--sp-4);z-index:60;
+    bottom:calc(var(--sp-4) + env(safe-area-inset-bottom));
+    display:none;align-items:center;gap:var(--sp-2);
+    background:#25D366;color:#fff;
     padding:var(--sp-3) var(--sp-5);
-    padding-bottom:calc(var(--sp-3) + env(safe-area-inset-bottom));
-    display:none;
-    box-shadow:0 -8px 24px -12px rgba(0,0,0,0.4);
+    border-radius:999px;
+    text-decoration:none;
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:var(--fs-200);
+    box-shadow:0 8px 20px -6px rgba(0,0,0,0.45);
+    transition:transform 180ms var(--ease-pop);
   }
-  .sticky-cta .btn{width:100%;}
-  @media (max-width:720px){.sticky-cta{display:block;} body{padding-bottom:76px;}}
+  .whatsapp-fab svg{width:22px;height:22px;flex-shrink:0;}
+  .whatsapp-fab:active{transform:scale(0.96);}
+  @media (max-width:720px){.whatsapp-fab{display:inline-flex;}}
 
   ::selection{background:var(--yellow);color:var(--ink);}
   @media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms !important;animation-duration:0.01ms !important;}}
@@ -585,7 +590,7 @@
         <circle cx="7" cy="18.6" r="1.6" fill="#FFC629"/>
         <circle cx="17" cy="18.6" r="1.6" fill="#FFC629"/>
       </svg>
-      <span class="logo-text"><strong>Perla</strong><span>Car Rental</span></span>
+      <span class="logo-text"><strong>Perla</strong><span>Rental Car</span></span>
     </a>
     <div class="header-tags">
       <span>Alquiler de carros</span>
@@ -967,7 +972,7 @@
           <circle cx="7" cy="18.6" r="1.6" fill="#FFC629"/>
           <circle cx="17" cy="18.6" r="1.6" fill="#FFC629"/>
         </svg>
-        <span class="logo-text"><strong style="color:#FAF9F6;">Perla</strong><span>Car Rental</span></span>
+        <span class="logo-text"><strong style="color:#FAF9F6;">Perla</strong><span>Rental Car</span></span>
       </a>
     </div>
     <div class="footer-groups">
@@ -995,24 +1000,27 @@
       <a href="#reservar">Contacto</a>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Perla Car Rental. Alquiler y renta de autos en Pereira y el Eje Cafetero.</span>
+      <span>© 2026 Perla Rental Car. Alquiler y renta de autos en Pereira y el Eje Cafetero.</span>
       <span>Pereira, Risaralda, Colombia</span>
     </div>
   </div>
 </footer>
 
-<div class="sticky-cta">
-  <a href="#reservar" class="btn btn-primary">Reservar ahora</a>
-</div>
+<!-- PENDIENTE: reemplazar 000000000000 por el número real de WhatsApp en formato internacional sin "+" (ej. 573001234567) -->
+<a class="whatsapp-fab" href="https://wa.me/000000000000?text=Hola%2C%20quiero%20reservar%20el%20Hyundai%20HV20" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 11.5a8.5 8.5 0 01-8.5 8.5c-1.35 0-2.62-.32-3.75-.9L3 20l1.05-4.2A8.5 8.5 0 1121 11.5z"/>
+    <path d="M8.7 10.6c.2-.5.6-1.1 1-1.1.3 0 .6.3.8.7.2.4.5 1 .3 1.4-.2.4-.5.6-.3 1 .3.5 1.4 1.7 2.5 2.1.4.2.7-.2 1-.5.3-.3.6-.4 1-.2.4.2 1.2.6 1.4.8.2.2.2.6 0 1-.2.4-.9.9-1.7.9-1.4 0-3.2-.9-4.4-2.1-1.2-1.2-2-2.7-2-3.6 0-.4.1-.7.4-1.4z"/>
+  </svg>
+  Reservar
+</a>
 
 <script>
-  // Altura real del header y de la barra CTA fija, para que el hero ocupe exactamente el resto de la pantalla
+  // Altura real del header, para que el hero ocupe exactamente el resto de la pantalla
   (function(){
     var header = document.querySelector('header');
-    var sticky = document.querySelector('.sticky-cta');
     function setHeights(){
       document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
-      document.documentElement.style.setProperty('--sticky-h', (sticky ? sticky.offsetHeight : 0) + 'px');
     }
     setHeights();
     window.addEventListener('resize', setHeights);
