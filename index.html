@@ -212,8 +212,9 @@
   /* ---------- Hero visual: full-bleed photo carousel ---------- */
   .hero-visual{
     position:relative;
-    height:calc(100vh - var(--header-h,64px) - var(--sticky-h,0px));
+    height:80vh;
     min-height:420px;
+    max-height:820px;
     overflow:hidden;
     background:var(--ink);
   }
@@ -223,12 +224,16 @@
     transition:opacity 700ms var(--ease-out);
   }
   .hv-slide.is-active{opacity:1;pointer-events:auto;}
-  .hv-slide img{width:100%;height:100%;object-fit:cover;display:block;}
-  .hv-slide[data-slide="0"] img{object-position:center 32%;}
-  .hv-slide[data-slide="2"] img{object-position:center 40%;}
+  .hv-backdrop{
+    position:absolute;inset:0;
+    background-size:cover;background-position:center;
+    filter:blur(35px) brightness(0.75);
+    transform:scale(1.15);
+  }
+  .hv-slide img{position:relative;width:100%;height:100%;object-fit:contain;display:block;}
   .hv-overlay{
     position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(180deg, rgba(20,22,26,0.18) 0%, rgba(20,22,26,0.08) 28%, rgba(20,22,26,0.6) 48%, rgba(20,22,26,0.88) 68%, rgba(20,22,26,0.94) 100%);
+    background:linear-gradient(180deg, rgba(20,22,26,0.3) 0%, rgba(20,22,26,0) 16%, rgba(20,22,26,0) 84%, rgba(20,22,26,0.4) 100%);
   }
 
   .hotspot{
@@ -289,13 +294,15 @@
   .hv-arrow-next{right:var(--sp-4);}
   @media (max-width:640px){.hv-arrow{width:36px;height:36px;}}
 
-  .hv-content{
-    position:absolute;left:0;right:0;bottom:0;z-index:5;
-    max-width:640px;margin:0 auto;text-align:center;color:var(--paper);
-    padding:0 var(--sp-5) var(--sp-7);
+  .hv-text-section{
+    background:var(--ink);
+    padding:var(--sp-7) 0 var(--sp-6);
+    text-align:center;
+    color:var(--paper);
   }
-  .hv-content h1{font-size:var(--fs-700);color:var(--paper);font-weight:500;margin-top:var(--sp-3);}
-  .hv-content h1 .accent{color:var(--yellow);}
+  .hv-text-section .container{max-width:640px;}
+  .hv-text-section h1{font-size:var(--fs-700);color:var(--paper);font-weight:500;margin-top:var(--sp-3);}
+  .hv-text-section h1 .accent{color:var(--yellow);}
   .hero-sub{margin-top:var(--sp-3);font-size:var(--fs-300);font-weight:400;color:var(--muted);}
   .hv-dynamic{margin-top:var(--sp-2);min-height:1.4em;}
   .hero-hint{font-size:var(--fs-200);font-weight:400;color:var(--muted);}
@@ -311,15 +318,10 @@
   .hv-dynamic.open .hv-detail-card{display:block;}
   .hv-detail-card h3{font-size:var(--fs-300);color:var(--yellow);font-weight:500;}
   .hv-detail-card p{margin-top:var(--sp-2);color:var(--muted);font-size:var(--fs-200);}
-  .hv-content .btn{margin-top:var(--sp-5);}
+  .hv-text-section .btn{margin-top:var(--sp-5);}
 
   @media (max-width:640px){
-    .hv-content h1{font-size:var(--fs-600);}
-    .hv-content{padding-bottom:var(--sp-6);}
-    .hotspot[data-key="interior"]{top:16% !important;}
-    .hotspot[data-key="tech"]{top:14% !important;}
-    .hotspot[data-key="drive"]{top:26% !important;}
-    .hotspot[data-key="safety"]{top:34% !important;}
+    .hv-text-section h1{font-size:var(--fs-600);}
   }
 
   /* Reservation */
@@ -567,28 +569,31 @@
   <!-- HERO -->
   <section class="hero-visual" id="heroVisual">
     <div class="hv-slide is-active" data-slide="0">
+      <div class="hv-backdrop" style="background-image:url('images/hv20-frontal.jpg')"></div>
       <img src="images/hv20-frontal.jpg" alt="Hyundai HV20 blanco, vista frontal, disponible para alquiler en Pereira" width="960" height="1280">
-      <button class="hotspot" type="button" data-key="interior" style="left:26%;top:25%;" aria-label="Interior y comodidad">
+      <button class="hotspot" type="button" data-key="interior" data-px="37" data-py="26" aria-label="Interior y comodidad">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
         <span class="hotspot-label">Interior y comodidad</span>
       </button>
-      <button class="hotspot" type="button" data-key="tech" style="left:70%;top:23%;" aria-label="Tecnología a bordo">
+      <button class="hotspot" type="button" data-key="tech" data-px="63" data-py="26" aria-label="Tecnología a bordo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
         <span class="hotspot-label">Tecnología a bordo</span>
       </button>
-      <button class="hotspot" type="button" data-key="drive" style="left:50%;top:40%;" aria-label="Motor automático">
+      <button class="hotspot" type="button" data-key="drive" data-px="51" data-py="41" aria-label="Motor automático">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
         <span class="hotspot-label">Motor automático</span>
       </button>
-      <button class="hotspot" type="button" data-key="safety" style="left:20%;top:46%;" aria-label="Seguridad y garantía">
+      <button class="hotspot" type="button" data-key="safety" data-px="50" data-py="60" aria-label="Seguridad y garantía">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
         <span class="hotspot-label">Seguridad y garantía</span>
       </button>
     </div>
     <div class="hv-slide" data-slide="1">
+      <div class="hv-backdrop" style="background-image:url('images/hv20-interior.jpg')"></div>
       <img src="images/hv20-interior.jpg" alt="Interior del Hyundai HV20: pantalla táctil, CarPlay y panel digital" width="1280" height="960">
     </div>
     <div class="hv-slide" data-slide="2">
+      <div class="hv-backdrop" style="background-image:url('images/hv20-maletero.jpg')"></div>
       <img src="images/hv20-maletero.jpg" alt="Maletero del Hyundai HV20 abierto, con espacio para equipaje" width="960" height="1280">
     </div>
 
@@ -607,7 +612,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 5l7 7-7 7"/></svg>
     </button>
 
-    <div class="hv-content">
+  </section>
+
+  <section class="hv-text-section">
+    <div class="container">
       <span class="eyebrow on-dark">Alquiler de carros en Pereira</span>
       <h1>Explora el Hyundai <span class="accent">HV20</span></h1>
       <p class="hero-sub">Automático, con aire acondicionado, CarPlay y Android Auto.</p>
@@ -895,18 +903,6 @@
 </div>
 
 <script>
-  // Altura real del header y de la barra CTA fija, para que el hero ocupe exactamente el resto de la pantalla
-  (function(){
-    var header = document.querySelector('header');
-    var sticky = document.querySelector('.sticky-cta');
-    function setHeights(){
-      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
-      document.documentElement.style.setProperty('--sticky-h', (sticky ? sticky.offsetHeight : 0) + 'px');
-    }
-    setHeights();
-    window.addEventListener('resize', setHeights);
-  })();
-
   // Carrusel de fotos del hero
   (function(){
     var slides = document.querySelectorAll('.hv-slide');
@@ -931,6 +927,32 @@
       dot.addEventListener('click', function(){ goTo(parseInt(dot.getAttribute('data-goto'), 10)); resetAutoplay(); });
     });
     resetAutoplay();
+  })();
+
+  // Ubica los hotspots sobre la imagen real (object-fit:contain), no sobre el slide completo
+  (function(){
+    var slide = document.querySelector('.hv-slide[data-slide="0"]');
+    var img = slide.querySelector('img');
+    var hotspots = slide.querySelectorAll('.hotspot');
+
+    function place(){
+      var box = slide.getBoundingClientRect();
+      var iw = img.naturalWidth, ih = img.naturalHeight;
+      if(!iw || !ih || !box.width || !box.height) return;
+      var scale = Math.min(box.width / iw, box.height / ih);
+      var renderW = iw * scale, renderH = ih * scale;
+      var offsetX = (box.width - renderW) / 2;
+      var offsetY = (box.height - renderH) / 2;
+      hotspots.forEach(function(h){
+        var px = parseFloat(h.getAttribute('data-px'));
+        var py = parseFloat(h.getAttribute('data-py'));
+        h.style.left = (offsetX + (px / 100) * renderW) + 'px';
+        h.style.top = (offsetY + (py / 100) * renderH) + 'px';
+      });
+    }
+
+    if(img.complete){ place(); } else { img.addEventListener('load', place); }
+    window.addEventListener('resize', place);
   })();
 
   // Hotspots sobre la foto frontal
