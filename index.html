@@ -376,6 +376,7 @@
     max-width:460px;
   }
   .hero-form-row{display:flex;flex-direction:column;gap:var(--sp-3);}
+  .hero-form-dates{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);}
   .field{display:flex;flex-direction:column;gap:var(--sp-1);}
   .field label{font-size:var(--fs-100);font-weight:500;color:var(--muted);}
   .field input{
@@ -389,6 +390,9 @@
   }
   .field input::placeholder{color:rgba(255,255,255,0.35);}
   .field input:focus{outline:none;border-color:var(--yellow);background:rgba(255,255,255,0.07);}
+  .field input[type="date"]{color-scheme:dark;}
+  .field input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1);cursor:pointer;}
+  @media (max-width:480px){.hero-form-dates{grid-template-columns:1fr;}}
   .hero-form .btn{width:100%;margin-top:var(--sp-2);}
   .hero-trust{
     margin-top:var(--sp-3);font-size:var(--fs-100);color:var(--muted);
@@ -671,6 +675,16 @@
     <div class="container">
       <form class="hero-form" id="reservar" novalidate>
         <div class="hero-form-row">
+          <div class="hero-form-dates">
+            <div class="field">
+              <label for="fecha-inicio">Fecha de inicio</label>
+              <input id="fecha-inicio" name="fecha-inicio" type="date" required>
+            </div>
+            <div class="field">
+              <label for="fecha-fin">Fecha de fin</label>
+              <input id="fecha-fin" name="fecha-fin" type="date" required>
+            </div>
+          </div>
           <div class="field">
             <label for="nombre">Nombre</label>
             <input id="nombre" name="nombre" type="text" placeholder="¿Cómo te llamas?" required>
@@ -812,8 +826,8 @@
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
-          <h3>Escribe tu nombre y tu WhatsApp</h3>
-          <p>Nos dejas tus datos arriba, en el formulario de reserva. No necesitas llamar ni llenar papeles todavía.</p>
+          <h3>Elige tus fechas y déjanos tus datos</h3>
+          <p>Seleccionas el rango de fechas y nos dejas tu nombre y WhatsApp arriba, en el formulario de reserva. No necesitas llamar ni llenar papeles todavía.</p>
           <svg class="step-arrow" viewBox="0 0 48 20" fill="none"><path d="M2 10h40M34 3l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="step">
@@ -1108,14 +1122,39 @@
     });
   });
 
+  // Fechas de la reserva: no permitir fechas pasadas ni fin antes que inicio
+  (function(){
+    var inicio = document.getElementById('fecha-inicio');
+    var fin = document.getElementById('fecha-fin');
+    var hoy = new Date().toISOString().split('T')[0];
+    inicio.min = hoy;
+    fin.min = hoy;
+    inicio.addEventListener('change', function(){
+      fin.min = inicio.value || hoy;
+      if(fin.value && fin.value < fin.min){ fin.value = fin.min; }
+    });
+  })();
+
+  function formatearFecha(iso){
+    var partes = iso.split('-');
+    var fecha = new Date(Number(partes[0]), Number(partes[1]) - 1, Number(partes[2]));
+    return fecha.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
   // Formulario (sin backend real conectado)
   document.querySelector('.hero-form').addEventListener('submit', function(e){
     e.preventDefault();
+    var fechaInicio = document.getElementById('fecha-inicio').value;
+    var fechaFin = document.getElementById('fecha-fin').value;
     var nombre = document.getElementById('nombre').value.trim();
     var whatsapp = document.getElementById('whatsapp').value.trim();
-    if(!nombre || !whatsapp){ return; }
-    console.log('Nueva reserva:', { nombre: nombre, whatsapp: whatsapp });
-    alert('¡Gracias, ' + nombre + '! Te escribimos por WhatsApp al ' + whatsapp + ' en los próximos minutos para confirmar tu reserva del HB20.');
+    if(!fechaInicio || !fechaFin || !nombre || !whatsapp){ return; }
+    if(fechaFin < fechaInicio){
+      alert('La fecha de fin no puede ser antes que la fecha de inicio.');
+      return;
+    }
+    console.log('Nueva reserva:', { fechaInicio: fechaInicio, fechaFin: fechaFin, nombre: nombre, whatsapp: whatsapp });
+    alert('¡Gracias, ' + nombre + '! Del ' + formatearFecha(fechaInicio) + ' al ' + formatearFecha(fechaFin) + '. Te escribimos por WhatsApp al ' + whatsapp + ' en los próximos minutos para confirmar tu reserva del HB20.');
     e.target.reset();
   });
 </script>
